@@ -8,6 +8,7 @@ app.use(express.json());
 const db =
   require("./config/keys").mongoURI ||
   "mongodb://localhost/TODO-LIST?retryWrites=true&w=majority";
+
 mongoose
   .connect(db, {
     useNewUrlParser: true,

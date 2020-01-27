@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { getItems, deleteItem } from "../actions/itemActions";
 import PropTypes from "prop-types";
 
-class ShoppingList extends Component {
+class ItemList extends Component {
   state = {};
   componentDidMount() {
     this.props.getItems();
@@ -15,14 +15,13 @@ class ShoppingList extends Component {
     this.props.deleteItem(id);
   };
 
-  // onAddSubmit = (name,;)
-
   render() {
     const { items } = this.props.item;
     return (
       <Container>
         <ListGroup>
           <TransitionGroup>
+            {" "}
             {items.map(({ _id, name }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
@@ -37,14 +36,14 @@ class ShoppingList extends Component {
                   {name}
                 </ListGroupItem>
               </CSSTransition>
-            ))}
+            ))}{" "}
           </TransitionGroup>
         </ListGroup>
       </Container>
     );
   }
 }
-ShoppingList.propTypes = {
+ItemList.propTypes = {
   getItems: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired
 };
@@ -52,4 +51,4 @@ const mapStateToProps = state => ({
   item: state.item
 });
 
-export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem })(ItemList);
