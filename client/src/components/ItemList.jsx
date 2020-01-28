@@ -21,7 +21,6 @@ class ItemList extends Component {
       <Container>
         <ListGroup>
           <TransitionGroup>
-            {" "}
             {items.map(({ _id, name }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
@@ -36,7 +35,7 @@ class ItemList extends Component {
                   {name}
                 </ListGroupItem>
               </CSSTransition>
-            ))}{" "}
+            ))}
           </TransitionGroup>
         </ListGroup>
       </Container>
