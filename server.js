@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-require("dotenv").config();
+const path = require("path");
 
 app.use(express.json());
 // ============================== >> DATABASE-CONFIG << ==================================
 const db =
   require("./config/keys").mongoURI ||
-  "mongodb://localhost/TODO-LIST?retryWrites=true&w=majority";
+  "mongodb://localhost/TODO-LIST?retryWrites=tamrue&w=majority";
 
 mongoose
   .connect(db, {
@@ -24,6 +24,15 @@ mongoose
 const itemsRoute = require("./routes/apis/items");
 
 app.use("/api/items", itemsRoute);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 // ============================= >> END-OF-R-CONFIG << ===================================
 
