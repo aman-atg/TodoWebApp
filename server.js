@@ -6,7 +6,7 @@ const path = require("path");
 app.use(express.json());
 // ============================== >> DATABASE-CONFIG << ==================================
 const db =
-  require("./config/keys").mongoURI ||
+  process.env.DBURL ||
   "mongodb://localhost/TODO-LIST?retryWrites=tamrue&w=majority";
 
 mongoose
