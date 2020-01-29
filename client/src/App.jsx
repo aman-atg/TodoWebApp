@@ -8,9 +8,13 @@ import { Container } from "reactstrap";
 import AppNavbar from "./components/AppNavbar";
 import ItemList from "./components/ItemList";
 import ItemModal from "./components/ItemModal";
+import { loadUser } from "./actions/authActions";
 
 class App extends Component {
   state = {};
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
   render() {
     return (
       <Provider store={store}>
