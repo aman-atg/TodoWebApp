@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../../models/users.model");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // @Route POST api/users
 // @Desc Register a new user
@@ -15,7 +16,7 @@ router.post("/", (req, res) => {
   User.findOne({ email }).then(user => {
     if (user)
       return res.send(400).json({
-        msg: "User already exits"
+        msg: "User already exists"
       });
     // creating new User
     const newUser = new User({
@@ -31,26 +32,22 @@ router.post("/", (req, res) => {
         newUser.password = hash;
 
         newUser.save().then(user => {
-          res.json({
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email
-            }
+          jwt.sign({ id: user.id }, "MyF*cking__Sec", (err, token) => {
+            if (err) throw err;
+
+            res.json({
+              token,
+              user: {
+                id: user.id,
+                name: user.name,
+                email: user.email
+              }
+            });
           });
         });
       });
     });
   });
 });
-
-// // @Route DELETE api/users/:id
-// // @Desc Delete an user
-// // @access Public
-// router.delete("/:id", (req, res) => {
-//   User.findById(req.params.id)
-//     .then(user => user.remove().then(() => res.json({ success: true })))
-//     .catch(err => res.status(404).json({ success: false }));
-// });
 
 module.exports = router;
