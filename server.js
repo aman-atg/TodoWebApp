@@ -23,8 +23,11 @@ mongoose
 // ============================= >> ROUTERS-CONFIG << ====================================
 const itemsRoute = require("./routes/apis/items");
 const usersRoute = require("./routes/apis/users");
+const authRoute = require("./routes/apis/auth");
+
 app.use("/api/items", itemsRoute);
 app.use("/api/users", usersRoute);
+app.use("/api/auth", authRoute);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
