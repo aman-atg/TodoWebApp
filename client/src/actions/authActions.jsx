@@ -29,7 +29,8 @@ export const loadUser = () => (dispatch, getState) => {
 };
 
 // Register User
-export const Register = ({ name, email, password }) => dispatch => {
+export const register = ({ name, email, password }) => dispatch => {
+  //headers
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -54,6 +55,9 @@ export const Register = ({ name, email, password }) => dispatch => {
       });
     });
 };
+
+// LOGOUT
+export const logout = () => ({ type: LOGOUT_SUCCESS });
 
 // setup config/headers and token
 export const tokenConfig = getState => {
