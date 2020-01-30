@@ -33,7 +33,7 @@ export const register = ({ name, email, password }) => dispatch => {
   //headers
   const config = {
     headers: {
-      "Content-Type": "application/json"
+      "Content-type": "application/json"
     }
   };
   // Request body
@@ -64,7 +64,7 @@ export const login = ({ email, password }) => dispatch => {
   //headers
   const config = {
     headers: {
-      "Content-Type": "application/json"
+      "Content-type": "application/json"
     }
   };
   // Request body
@@ -90,11 +90,11 @@ export const login = ({ email, password }) => dispatch => {
 // setup config/headers and token
 export const tokenConfig = getState => {
   // Get token from localStorage
-  const { token } = getState().auth;
+  const token = getState().auth.token;
   //Headers
   const config = {
     headers: {
-      "content-type": "application/json"
+      "Content-type": "application/json"
     }
   };
   // if token, add to headers

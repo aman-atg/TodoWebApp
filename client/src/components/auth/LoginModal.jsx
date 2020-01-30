@@ -65,7 +65,7 @@ class LoginModal extends Component {
 
     // Attempt to login
     this.props.login(user);
-    if (this.state.modal && this.props.isAuthenticated) this.toggle();
+    // if (this.state.modal && this.props.isAuthenticated) this.toggle();
   };
 
   render() {
