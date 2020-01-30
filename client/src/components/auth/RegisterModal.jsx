@@ -8,11 +8,13 @@ import {
   FormGroup,
   Label,
   Input,
-  NavLink
+  NavLink,
+  Alert
 } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
 
 class RegisterModal extends Component {
   state = {
@@ -26,10 +28,26 @@ class RegisterModal extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
-    register: PropTypes.func.isRequired
+    register: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
   };
 
+  componentDidUpdate(prevProps) {
+    const { error, isAuthenticated } = this.props;
+    if (error !== prevProps.error) {
+      //Check for register error
+      if (error.id === "REGISTER_FAIL") {
+        this.setState({ msg: error.msg.msg });
+      } else {
+        this.setState({ msg: null });
+      }
+    }
+    if (this.state.modal && isAuthenticated) this.toggle();
+  }
+
   toggle = () => {
+    // clear errors
+    this.props.clearErrors();
     this.setState({ modal: !this.state.modal });
   };
 
@@ -39,7 +57,15 @@ class RegisterModal extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.toggle();
+    const { name, email, password } = this.state;
+    // create user obj.
+    const newUser = {
+      name,
+      email,
+      password
+    };
+    // Attemp to register
+    this.props.register(newUser);
   };
 
   render() {
@@ -51,6 +77,9 @@ class RegisterModal extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Register</ModalHeader>
           <ModalBody>
+            {this.state.msg ? (
+              <Alert color="danger">{this.state.msg}</Alert>
+            ) : null}
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="name">Name</Label>
@@ -97,4 +126,6 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { register })(RegisterModal);
+export default connect(mapStateToProps, { register, clearErrors })(
+  RegisterModal
+);
