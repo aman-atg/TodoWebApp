@@ -16,12 +16,12 @@ router.post("/", (req, res) => {
   // Existing User or Not
   User.findOne({ email }).then(user => {
     if (!user)
-      return res.send(400).json({
+      return res.status(400).json({
         msg: "User does not exist"
       });
     //  Validate password
     bcrypt.compare(password, user.password).then(isMatch => {
-      if (!isMatch) res.status(400).json({ msg: "Invalid credentials" });
+      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
       jwt.sign({ id: user.id }, "MyF*cking__Sec", (err, token) => {
         if (err) throw err;
