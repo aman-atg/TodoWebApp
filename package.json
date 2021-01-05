@@ -13,7 +13,7 @@
   "author": "Aman",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "concurrently": "^3.6.1",
     "config": "^3.2.5",
